@@ -28,11 +28,8 @@ fn create_adapter(base_url: &str) -> HttpClientRequestAdapter {
     let mut writer_registry = SerializationWriterFactoryRegistry::new();
     writer_registry.register(Arc::new(JsonSerializationWriterFactory));
 
-    let mut adapter = HttpClientRequestAdapter::new(
-        auth,
-        Arc::new(parse_registry),
-        Arc::new(writer_registry),
-    );
+    let mut adapter =
+        HttpClientRequestAdapter::new(auth, Arc::new(parse_registry), Arc::new(writer_registry));
     adapter.set_base_url(base_url);
     adapter
 }
@@ -194,8 +191,7 @@ async fn test_request_hits_correct_endpoint() {
     Mock::given(method("GET"))
         .and(path("/api/v2/users"))
         .respond_with(
-            ResponseTemplate::new(200)
-                .set_body_json(serde_json::json!({"name": "Alice"})),
+            ResponseTemplate::new(200).set_body_json(serde_json::json!({"name": "Alice"})),
         )
         .expect(1)
         .mount(&server)
