@@ -1,0 +1,18 @@
+[package]
+name = "kiota-http-reqwest"
+description = "HTTP client adapter for Kiota-generated Rust API clients"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+kiota-abstractions = { path = "../kiota-abstractions" }
+reqwest = { workspace = true }
+tokio = { workspace = true }
+async-trait = { workspace = true }
+url = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
