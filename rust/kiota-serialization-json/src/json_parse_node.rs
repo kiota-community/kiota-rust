@@ -194,9 +194,9 @@ mod tests {
 
     #[test]
     fn parse_f64() {
-        let node = JsonParseNode::new(json!(3.14));
+        let node = JsonParseNode::new(json!(42.5));
         let val = node.get_f64_value().unwrap().unwrap();
-        assert!((val - 3.14).abs() < f64::EPSILON);
+        assert!((val - 42.5).abs() < f64::EPSILON);
     }
 
     #[test]

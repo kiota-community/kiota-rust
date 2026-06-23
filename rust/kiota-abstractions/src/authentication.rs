@@ -117,7 +117,7 @@ impl<T: AccessTokenProvider> AuthenticationProvider for BaseBearerTokenAuthentic
         if !token.is_empty() {
             request
                 .headers
-                .insert("Authorization".to_string(), format!("Bearer {token}"));
+                .insert("Authorization", format!("Bearer {token}"));
         }
 
         Ok(())
