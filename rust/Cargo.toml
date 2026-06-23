@@ -3,7 +3,10 @@ resolver = "2"
 members = [
     "kiota-abstractions",
     "kiota-serialization-json",
+    "kiota-serialization-text",
+    "kiota-serialization-form",
     "kiota-http-reqwest",
+    "kiota-bundle",
 ]
 
 [workspace.package]
