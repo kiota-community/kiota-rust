@@ -16,3 +16,6 @@ url = { workspace = true }
 
 [dev-dependencies]
 serde_json = { workspace = true }
+tokio = { workspace = true }
+wiremock = "0.6"
+kiota-serialization-json = { path = "../kiota-serialization-json" }
