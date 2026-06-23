@@ -31,6 +31,8 @@ jobs:
         run: dotnet build kiota.slnx --no-restore
       - name: Test
         run: dotnet test kiota.slnx --no-build --verbosity normal --collect:"XPlat Code Coverage"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Install report generator
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
       - name: Generate coverage report
