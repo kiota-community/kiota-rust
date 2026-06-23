@@ -91,18 +91,15 @@ impl<T: AccessTokenProvider> BaseBearerTokenAuthenticationProvider<T> {
 }
 
 #[async_trait]
-impl<T: AccessTokenProvider> AuthenticationProvider
-    for BaseBearerTokenAuthenticationProvider<T>
-{
+impl<T: AccessTokenProvider> AuthenticationProvider for BaseBearerTokenAuthenticationProvider<T> {
     async fn authenticate_request(
         &self,
         request: &mut RequestInformation,
         additional_context: Option<&HashMap<String, String>>,
     ) -> Result<(), ApiError> {
         let uri_string = request.get_uri()?;
-        let url = url::Url::parse(&uri_string).map_err(|e| {
-            ApiError::new(0, format!("Invalid URL: {e}"))
-        })?;
+        let url = url::Url::parse(&uri_string)
+            .map_err(|e| ApiError::new(0, format!("Invalid URL: {e}")))?;
 
         if !self
             .access_token_provider
@@ -140,16 +137,14 @@ mod tests {
 
     #[test]
     fn allowed_hosts_validator_matches_case_insensitive() {
-        let validator =
-            AllowedHostsValidator::new(vec!["Graph.Microsoft.Com".to_string()]);
+        let validator = AllowedHostsValidator::new(vec!["Graph.Microsoft.Com".to_string()]);
         let url = url::Url::parse("https://graph.microsoft.com/v1.0/me").unwrap();
         assert!(validator.is_url_host_valid(&url));
     }
 
     #[test]
     fn allowed_hosts_validator_rejects_unknown() {
-        let validator =
-            AllowedHostsValidator::new(vec!["graph.microsoft.com".to_string()]);
+        let validator = AllowedHostsValidator::new(vec!["graph.microsoft.com".to_string()]);
         let url = url::Url::parse("https://evil.example.com").unwrap();
         assert!(!validator.is_url_host_valid(&url));
     }

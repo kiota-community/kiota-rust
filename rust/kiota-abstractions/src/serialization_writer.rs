@@ -44,18 +44,10 @@ pub trait SerializationWriter: Send + Sync {
     fn write_time_only_value(&mut self, key: &str, value: &TimeOnly) -> Result<(), ApiError>;
 
     /// Writes a date-time property.
-    fn write_datetime_value(
-        &mut self,
-        key: &str,
-        value: &DateTime<Utc>,
-    ) -> Result<(), ApiError>;
+    fn write_datetime_value(&mut self, key: &str, value: &DateTime<Utc>) -> Result<(), ApiError>;
 
     /// Writes a nested object property.
-    fn write_object_value(
-        &mut self,
-        key: &str,
-        value: &dyn Parsable,
-    ) -> Result<(), ApiError>;
+    fn write_object_value(&mut self, key: &str, value: &dyn Parsable) -> Result<(), ApiError>;
 
     /// Writes a collection of nested objects.
     fn write_collection_of_object_values(
@@ -67,10 +59,7 @@ pub trait SerializationWriter: Send + Sync {
     /// Writes additional untyped data (e.g. extra JSON properties).
     ///
     /// Keys are property names; values are `serde_json::Value` instances.
-    fn write_additional_data(
-        &mut self,
-        data: &HashMap<String, Value>,
-    ) -> Result<(), ApiError>;
+    fn write_additional_data(&mut self, data: &HashMap<String, Value>) -> Result<(), ApiError>;
 
     /// Returns the serialized content as a byte vector.
     fn get_serialized_content(&self) -> Result<Vec<u8>, ApiError>;

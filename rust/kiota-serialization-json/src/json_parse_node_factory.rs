@@ -41,7 +41,9 @@ mod tests {
     fn creates_parse_node_for_json() {
         let factory = JsonParseNodeFactory;
         let content = b"{\"key\": \"value\"}";
-        let node = factory.get_root_parse_node("application/json", content).unwrap();
+        let node = factory
+            .get_root_parse_node("application/json", content)
+            .unwrap();
         let child = node.get_child_node("key").unwrap();
         assert_eq!(child.get_string_value().unwrap(), Some("value".to_string()));
     }

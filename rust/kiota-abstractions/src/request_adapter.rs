@@ -2,11 +2,11 @@ use std::collections::HashMap;
 
 use async_trait::async_trait;
 
+use crate::Parsable;
 use crate::api_error::ApiError;
 use crate::parsable::ParsableFactory;
 use crate::request_information::RequestInformation;
 use crate::serialization_writer_factory::SerializationWriterFactory;
-use crate::Parsable;
 
 /// Trait for executing generated request builders.
 ///

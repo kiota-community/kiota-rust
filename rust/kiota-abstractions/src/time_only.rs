@@ -47,15 +47,15 @@ impl FromStr for TimeOnly {
             ));
         }
 
-        let hour = parts[0].parse::<u32>().map_err(|e| {
-            ApiError::new(0, format!("invalid hour in time '{s}': {e}"))
-        })?;
-        let minute = parts[1].parse::<u32>().map_err(|e| {
-            ApiError::new(0, format!("invalid minute in time '{s}': {e}"))
-        })?;
-        let second = parts[2].parse::<u32>().map_err(|e| {
-            ApiError::new(0, format!("invalid second in time '{s}': {e}"))
-        })?;
+        let hour = parts[0]
+            .parse::<u32>()
+            .map_err(|e| ApiError::new(0, format!("invalid hour in time '{s}': {e}")))?;
+        let minute = parts[1]
+            .parse::<u32>()
+            .map_err(|e| ApiError::new(0, format!("invalid minute in time '{s}': {e}")))?;
+        let second = parts[2]
+            .parse::<u32>()
+            .map_err(|e| ApiError::new(0, format!("invalid second in time '{s}': {e}")))?;
 
         Ok(Self {
             hour,

@@ -55,10 +55,7 @@ impl HttpClientRequestAdapter {
     }
 
     /// Builds a reqwest::Request from RequestInformation.
-    async fn build_request(
-        &self,
-        info: &RequestInformation,
-    ) -> Result<reqwest::Request, ApiError> {
+    async fn build_request(&self, info: &RequestInformation) -> Result<reqwest::Request, ApiError> {
         let uri = info.get_uri()?;
         let method = match info.http_method {
             HttpMethod::Get => reqwest::Method::GET,
@@ -93,10 +90,7 @@ impl HttpClientRequestAdapter {
     }
 
     /// Sends the request and returns the response body bytes + content type.
-    async fn send_request(
-        &self,
-        info: &RequestInformation,
-    ) -> Result<(Vec<u8>, String), ApiError> {
+    async fn send_request(&self, info: &RequestInformation) -> Result<(Vec<u8>, String), ApiError> {
         // Build a minimal mutable copy for auth (only headers need mutation)
         let mut auth_info = RequestInformation::new();
         auth_info.http_method = info.http_method;

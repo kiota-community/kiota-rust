@@ -43,15 +43,15 @@ impl FromStr for DateOnly {
             ));
         }
 
-        let year = parts[0].parse::<i32>().map_err(|e| {
-            ApiError::new(0, format!("invalid year in date '{s}': {e}"))
-        })?;
-        let month = parts[1].parse::<u32>().map_err(|e| {
-            ApiError::new(0, format!("invalid month in date '{s}': {e}"))
-        })?;
-        let day = parts[2].parse::<u32>().map_err(|e| {
-            ApiError::new(0, format!("invalid day in date '{s}': {e}"))
-        })?;
+        let year = parts[0]
+            .parse::<i32>()
+            .map_err(|e| ApiError::new(0, format!("invalid year in date '{s}': {e}")))?;
+        let month = parts[1]
+            .parse::<u32>()
+            .map_err(|e| ApiError::new(0, format!("invalid month in date '{s}': {e}")))?;
+        let day = parts[2]
+            .parse::<u32>()
+            .map_err(|e| ApiError::new(0, format!("invalid day in date '{s}': {e}")))?;
 
         Ok(Self { year, month, day })
     }

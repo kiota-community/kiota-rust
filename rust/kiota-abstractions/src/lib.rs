@@ -40,5 +40,7 @@ pub use parse_node_factory::{ParseNodeFactory, ParseNodeFactoryRegistry};
 pub use request_adapter::RequestAdapter;
 pub use request_information::{HttpMethod, RequestInformation};
 pub use serialization_writer::SerializationWriter;
-pub use serialization_writer_factory::{SerializationWriterFactory, SerializationWriterFactoryRegistry};
+pub use serialization_writer_factory::{
+    SerializationWriterFactory, SerializationWriterFactoryRegistry,
+};
 pub use time_only::TimeOnly;

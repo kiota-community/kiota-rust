@@ -74,8 +74,7 @@ mod tests {
 
     #[test]
     fn with_response_body_sets_body() {
-        let err = ApiError::new(400, "Bad Request")
-            .with_response_body("{\"error\": \"invalid\"}");
+        let err = ApiError::new(400, "Bad Request").with_response_body("{\"error\": \"invalid\"}");
         assert_eq!(
             err.response_body.as_deref(),
             Some("{\"error\": \"invalid\"}")
@@ -84,8 +83,7 @@ mod tests {
 
     #[test]
     fn implements_error_trait() {
-        let err: Box<dyn std::error::Error> =
-            Box::new(ApiError::new(503, "Service Unavailable"));
+        let err: Box<dyn std::error::Error> = Box::new(ApiError::new(503, "Service Unavailable"));
         assert!(err.to_string().contains("503"));
     }
 }

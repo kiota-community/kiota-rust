@@ -178,8 +178,10 @@ mod tests {
     fn get_uri_with_path_params() {
         let mut req = RequestInformation::new();
         req.url_template = "{+baseurl}/users/{userId}".to_string();
-        req.path_parameters
-            .insert("baseurl".to_string(), "https://graph.microsoft.com".to_string());
+        req.path_parameters.insert(
+            "baseurl".to_string(),
+            "https://graph.microsoft.com".to_string(),
+        );
         req.path_parameters
             .insert("userId".to_string(), "123".to_string());
         let uri = req.get_uri().unwrap();

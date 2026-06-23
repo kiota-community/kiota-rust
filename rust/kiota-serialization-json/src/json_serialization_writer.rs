@@ -37,7 +37,8 @@ impl Default for JsonSerializationWriter {
 
 impl SerializationWriter for JsonSerializationWriter {
     fn write_string_value(&mut self, key: &str, value: &str) -> Result<(), ApiError> {
-        self.root.insert(key.to_string(), Value::String(value.to_string()));
+        self.root
+            .insert(key.to_string(), Value::String(value.to_string()));
         Ok(())
     }
 
@@ -47,12 +48,14 @@ impl SerializationWriter for JsonSerializationWriter {
     }
 
     fn write_i32_value(&mut self, key: &str, value: i32) -> Result<(), ApiError> {
-        self.root.insert(key.to_string(), Value::Number(value.into()));
+        self.root
+            .insert(key.to_string(), Value::Number(value.into()));
         Ok(())
     }
 
     fn write_i64_value(&mut self, key: &str, value: i64) -> Result<(), ApiError> {
-        self.root.insert(key.to_string(), Value::Number(value.into()));
+        self.root
+            .insert(key.to_string(), Value::Number(value.into()));
         Ok(())
     }
 
@@ -71,33 +74,34 @@ impl SerializationWriter for JsonSerializationWriter {
     }
 
     fn write_uuid_value(&mut self, key: &str, value: &Uuid) -> Result<(), ApiError> {
-        self.root.insert(key.to_string(), Value::String(value.to_string()));
+        self.root
+            .insert(key.to_string(), Value::String(value.to_string()));
         Ok(())
     }
 
     fn write_date_only_value(&mut self, key: &str, value: &DateOnly) -> Result<(), ApiError> {
-        self.root.insert(key.to_string(), Value::String(value.to_string()));
+        self.root
+            .insert(key.to_string(), Value::String(value.to_string()));
         Ok(())
     }
 
     fn write_time_only_value(&mut self, key: &str, value: &TimeOnly) -> Result<(), ApiError> {
-        self.root.insert(key.to_string(), Value::String(value.to_string()));
+        self.root
+            .insert(key.to_string(), Value::String(value.to_string()));
         Ok(())
     }
 
     fn write_datetime_value(&mut self, key: &str, value: &DateTime<Utc>) -> Result<(), ApiError> {
-        self.root.insert(key.to_string(), Value::String(value.to_rfc3339()));
+        self.root
+            .insert(key.to_string(), Value::String(value.to_rfc3339()));
         Ok(())
     }
 
-    fn write_object_value(
-        &mut self,
-        key: &str,
-        value: &dyn Parsable,
-    ) -> Result<(), ApiError> {
+    fn write_object_value(&mut self, key: &str, value: &dyn Parsable) -> Result<(), ApiError> {
         let mut child_writer = JsonSerializationWriter::new();
         value.serialize(&mut child_writer)?;
-        self.root.insert(key.to_string(), Value::Object(child_writer.root));
+        self.root
+            .insert(key.to_string(), Value::Object(child_writer.root));
         Ok(())
     }
 
@@ -116,10 +120,7 @@ impl SerializationWriter for JsonSerializationWriter {
         Ok(())
     }
 
-    fn write_additional_data(
-        &mut self,
-        data: &HashMap<String, Value>,
-    ) -> Result<(), ApiError> {
+    fn write_additional_data(&mut self, data: &HashMap<String, Value>) -> Result<(), ApiError> {
         for (key, val) in data {
             self.root.insert(key.clone(), val.clone());
         }

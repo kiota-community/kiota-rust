@@ -1,7 +1,5 @@
 //! JSON-backed implementation of [`ParseNode`].
 
-
-
 use chrono::{DateTime, Utc};
 use serde_json::Value;
 use uuid::Uuid;
