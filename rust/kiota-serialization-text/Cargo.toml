@@ -1,0 +1,13 @@
+[package]
+name = "kiota-serialization-text"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85.0"
+description = "Text/plain serialization for Kiota-generated API clients"
+license = "MIT"
+
+[dependencies]
+kiota-abstractions = { path = "../kiota-abstractions" }
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["v4"] }
+serde_json = "1"
