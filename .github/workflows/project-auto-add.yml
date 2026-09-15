@@ -16,15 +16,24 @@ jobs:
   track_issue:
     if: github.actor != 'dependabot[bot]' && github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-latest
+    env:
+      GRAPHBOT_APP_ID: ${{ secrets.GRAPHBOT_APP_ID }}
+      GRAPHBOT_APP_PEM: ${{ secrets.GRAPHBOT_APP_PEM }}
     steps:
+      - name: Skip project tracking when GraphBot is not configured
+        if: env.GRAPHBOT_APP_ID == '' || env.GRAPHBOT_APP_PEM == ''
+        run: echo "Skipping project tracking because GRAPHBOT_APP_ID or GRAPHBOT_APP_PEM is not configured."
+
       - name: Generate token
+        if: env.GRAPHBOT_APP_ID != '' && env.GRAPHBOT_APP_PEM != ''
         id: generate_token
         uses: actions/create-github-app-token@v3
         with:
-          app-id: ${{ secrets.GRAPHBOT_APP_ID }}
-          private-key: ${{ secrets.GRAPHBOT_APP_PEM }}
+          app-id: ${{ env.GRAPHBOT_APP_ID }}
+          private-key: ${{ env.GRAPHBOT_APP_PEM }}
 
       - name: Check if issue has language specified
+        if: env.GRAPHBOT_APP_ID != '' && env.GRAPHBOT_APP_PEM != ''
         env:
           ISSUE_BODY: ${{github.event.issue.body}}
         run: |
@@ -40,6 +49,7 @@ jobs:
           fi
 
       - name: Get project data
+        if: env.GRAPHBOT_APP_ID != '' && env.GRAPHBOT_APP_PEM != ''
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
           ORGANIZATION: microsoft
@@ -72,6 +82,7 @@ jobs:
           echo "LANGUAGE_OPTION_ID=$LANGUAGE_OPTION_ID" >> $GITHUB_ENV
 
       - name: Add Issue or PR to project
+        if: env.GRAPHBOT_APP_ID != '' && env.GRAPHBOT_APP_PEM != ''
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
           ISSUE_ID: ${{ github.event_name == 'issues' && github.event.issue.node_id || github.event.pull_request.node_id }}
@@ -88,6 +99,7 @@ jobs:
           echo 'ITEM_ID='$item_id >> $GITHUB_ENV
 
       - name: Set Language to Project
+        if: env.GRAPHBOT_APP_ID != '' && env.GRAPHBOT_APP_PEM != ''
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
@@ -111,7 +123,7 @@ jobs:
             }' -f project=$PROJECT_ID -f item=$ITEM_ID -f language_field=$LANGUAGE_FIELD_ID -f language_value=${{ env.LANGUAGE_OPTION_ID }} --silent
 
       - name: Get label for selected language in repository
-        if: ${{ env.SELECTED_LANGUAGE != 'Multiple Languages'}}
+        if: ${{ env.GRAPHBOT_APP_ID != '' && env.GRAPHBOT_APP_PEM != '' && env.SELECTED_LANGUAGE != 'Multiple Languages' }}
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
@@ -131,7 +143,7 @@ jobs:
           echo 'LANGUAGELABEL_ID='$(jq --arg lang "$SELECTED_LANGUAGE" '.data.repository.labels.nodes[] | select(.name==$lang) | .id' issue_data.json) >> $GITHUB_ENV
 
       - name: Add label to issue
-        if: ${{ env.SELECTED_LANGUAGE != 'Multiple Languages'}}
+        if: ${{ env.GRAPHBOT_APP_ID != '' && env.GRAPHBOT_APP_PEM != '' && env.SELECTED_LANGUAGE != 'Multiple Languages' }}
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
           ISSUE_ID: ${{ github.event_name == 'issues' && github.event.issue.node_id || github.event.pull_request.node_id }}
