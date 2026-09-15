@@ -1,0 +1,14 @@
+[package]
+name = "kiota-bundle"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85.0"
+description = "Convenience bundle re-exporting all Kiota Rust runtime crates"
+license = "MIT"
+
+[dependencies]
+kiota-abstractions = { path = "../kiota-abstractions" }
+kiota-serialization-json = { path = "../kiota-serialization-json" }
+kiota-serialization-text = { path = "../kiota-serialization-text" }
+kiota-serialization-form = { path = "../kiota-serialization-form" }
+kiota-http-reqwest = { path = "../kiota-http-reqwest" }
